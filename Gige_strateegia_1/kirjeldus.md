@@ -7,4 +7,4 @@ Andmed võetakse programmi lw_main.py failist eminiSP500.csv
 eminiSP500.csv, nagu nimi ütleb, sisaldab E-Mini S&P 500 futuuride lepingute hindasid päeva kaupa 2021. aasta novembrist 2023. aasta novembrini.
 Põhiprogramm lw_main.py loeb andmed sisse ning seejärel aktiveerib faili lw_strateegia.py, mis sisaldab kauplemisalgoritmi parameetreid.
 Kuna tegemist on futuuridega, siis on kasumite/kahjumite arvutamine teistsugune võrreldes teiste varaklassidega.  
-Antud juhul on iga 0.25 osa hinna liikumist võrdne 12.5 dollarilise kasumi/kahjumi liikumisega.  
+Antud juhul on iga hinna punkti liikumine võrdne 50 dollarilise kasumi/kahjumi liikumisega.  
