@@ -28,7 +28,7 @@ class LW_Strategy(backtrader.Strategy):                                         
 
     def next(self):                                                                                         # põhifunktsioon, mis aktiveerub igal sammul, kui analüüsitakse hindasid
         self.log('Close, %.2f' % self.dataclose[0]) 
-        print(self.pnl)
+        print("Hetkeseisu kasum/kahjum: "+str(self.pnl))
         if self.order:
             return
         if not self.position:
