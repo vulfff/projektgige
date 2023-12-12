@@ -55,6 +55,9 @@ class BacktestApp:
         nupu_stiil2.configure("TButton", padding=5, relief="flat", background="#C6C6C6", foreground="#AFAFAF", font=("Helvetica", 10, "bold"),)
         nupu_stiil2.map("TButton", background=[("active", "#C6C6C6")])
         
+        # Defineerin 'rooti', et põhifailis sellele paremini ligi saaks
+        self.root=master
+
         # Iga kord kui midagi entry boxi sisestatakse, siis kontrollib kas input on numerical
     def kontrolli_kas_on_number(self, new_value):
         if not new_value:
@@ -80,16 +83,27 @@ class BacktestApp:
         if self.rahasumma == "" or self.riskiprotsent == "" or self.failitee == "Vali fail":
             messagebox.showerror("ERROR", "Kontrolli üle sisestus")
         else:
-            root.destroy()
+            self.master.destroy()
+
+    def kinnita_andmed(self):
+        # Call võta_väärtused method
+        self.võta_väärtused()
+
+    def sulge_aken(self):
+        # Close the Tkinter window using self.master
+        self.master.destroy()
     
+    def kontrolli_andmeid(self):
+        if all(hasattr(self, omadus) for omadus in ["rahasumma", "riskiprotsent", "failitee"]):
+            print(f"Rahasumma: {self.rahasumma}")
+            print(f"Riskiprotsent: {self.riskiprotsent}")
+            print(f"Failitee: {self.failitee}")
+
+    def saa_risk(self):
+        return self.riskiprotsent
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = BacktestApp(root)
-    
+
     root.mainloop()
-    
-# Kui aken pandi "X" vajutades kinni, siis ei kuva andmeid
-if all(hasattr(app, omadus) for omadus in ["rahasumma", "riskiprotsent", "failitee"]):
-    print(f"Rahasumma: {app.rahasumma}")
-    print(f"Riskiprotsent: {app.riskiprotsent}")
-    print(f"Failitee: {app.failitee}")
