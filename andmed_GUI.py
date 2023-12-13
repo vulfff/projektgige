@@ -1,14 +1,16 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
+
 class BacktestApp:
     def __init__(self, master):
+
         self.master = master
         master.title("Backtester")
         master.configure(bg="#C6C6C6")  # Taustavärv
         
-        master.maxsize(550, 450)
-        master.minsize(550, 450)
+        master.maxsize(550, 650)
+        master.minsize(550, 650)
         
         logo = tk.PhotoImage(file="logo.png")
         master.iconphoto(True, logo)
@@ -41,9 +43,24 @@ class BacktestApp:
         self.faili_nupp = ttk.Button(master, text="Kliki siia, et valida fail", command=self.lae_fail, style="TButton")
         self.faili_nupp.pack(pady=5)
 
+        # Indikaatorite checkboxid
+        self.checkboxide_silt = tk.Label(master, text="Vali indikaatorid", font=("Helvetica", 12, "bold"), bg="#C6C6C6")
+        self.checkboxide_silt.pack()
+
+        self.checkboxide_raam = tk.Frame(self.master, bg="#C6C6C6")
+        self.checkboxide_raam.pack(padx=20, pady=5)
+
+        self.indikaatorid = {"Moving average":False, "Exponential moving average":False, "MACD":False, "RSI":False, "LarryR":False}
+        self.checkboxid = []
+
+        for i, indikaator in enumerate(self.indikaatorid):
+            muutuja = tk.IntVar()
+            self.checkbox = tk.Checkbutton(self.checkboxide_raam, variable=muutuja, text=indikaator, font=("Helvetica", 10), bg="#C6C6C6", selectcolor="#C6C6C6")
+            self.checkbox.grid(row=i, column=1, sticky="w", padx=180)
+            self.checkboxid.append(muutuja)
         # Kinnita nupp
         self.kinnita_nupp = ttk.Button(master, text="Kinnita andmed ja alusta", command=self.võta_väärtused, style="Bold.TButton")
-        self.kinnita_nupp.pack(pady=(40, 20))
+        self.kinnita_nupp.pack(pady = (40, 20))
 
         # Kinnita nupu stiil
         nupu_stiil = ttk.Style()
@@ -59,12 +76,14 @@ class BacktestApp:
         self.root=master
 
         # Iga kord kui midagi entry boxi sisestatakse, siis kontrollib kas input on numerical
-    def kontrolli_kas_on_number(self, new_value):
-        if not new_value:
+    def kontrolli_kas_on_number(self, input):
+        if not input:
             return True  # Lubab kustutada
 
         try:
-            float(new_value)
+            float(input)
+            if " " in input:
+                return False
             return True
         except ValueError:
             return False
@@ -79,28 +98,16 @@ class BacktestApp:
         self.rahasumma = self.rahasumma_sisestus.get()
         self.riskiprotsent = self.riskiprotsent_sisestus.get()
         self.failitee = self.faili_silt.cget("text").replace("Valitud fail: ", "")
+        self.checkboxid = list(map(bool,[muutuja.get() for muutuja in self.checkboxid]))  # Boolean list checkboxi väärtustest
+        for i, indikaator in enumerate(self.indikaatorid):       # Teeb sõnastiku indikaatoritest ja nende väärtustest
+            self.indikaatorid[indikaator] = self.checkboxid[i]
         
         if self.rahasumma == "" or self.riskiprotsent == "" or self.failitee == "Vali fail":
             messagebox.showerror("ERROR", "Kontrolli üle sisestus")
         else:
+            #print(self.indikaatorid)
+            self.andmed_olemas = True
             self.master.destroy()
-
-    def kinnita_andmed(self):
-        # Call võta_väärtused method
-        self.võta_väärtused()
-
-    def sulge_aken(self):
-        # Close the Tkinter window using self.master
-        self.master.destroy()
-    
-    def kontrolli_andmeid(self):
-        if all(hasattr(self, omadus) for omadus in ["rahasumma", "riskiprotsent", "failitee"]):
-            print(f"Rahasumma: {self.rahasumma}")
-            print(f"Riskiprotsent: {self.riskiprotsent}")
-            print(f"Failitee: {self.failitee}")
-
-    def saa_risk(self):
-        return self.riskiprotsent
 
 if __name__ == "__main__":
     root = tk.Tk()
