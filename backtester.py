@@ -2,13 +2,14 @@ import backtrader
 from andmed_GUI import BacktestApp
 
 class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsume
-    params = (          # MACD indikaatori parameetrid
+    # MACD indikaatori parameetrid
+    params = (         
         ('macd1',12),
         ('macd2',26),
         ('macdsig',9),
     )
-    
-    def log(self, txt, dt=None):    # Funktsioon, mis tagastab väljakutsumisel terminali andmetefailist parajasti töödeldava kuupäeva.
+    # Funktsioon, mis tagastab väljakutsumisel terminali andmetefailist parajasti töödeldava kuupäeva.
+    def log(self, txt, dt=None):    
         dt = dt or self.datas[0].datetime.date(0)
         print('%s, %s' % (dt.isoformat(), txt))
 
@@ -19,6 +20,7 @@ class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsum
         self.dataclose = self.datas[0].close    # Defineerime andmestiku järjendi ümber lihtsamini kirjutatavasse vormi.
         self.order=None     # Anname programmi initsialiseerimisel teada, et positsioone pole veel sisestatud.ss
 
+        # Indikaatorite sisse toomine, nende poolt tekkinud väärtuste omistamine.
         self.williams = backtrader.indicators.WilliamsR(self.data, period=14)
         self.macd = backtrader.indicators.MACD(self.dataclose,
                                                 period_me1=self.params.macd1,
@@ -31,9 +33,9 @@ class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsum
         self.rsi=backtrader.indicators.RelativeStrengthIndex(self.dataclose, period=14)
         self.sma = backtrader.indicators.SMA(self.dataclose, period=9)
 
-        # Indikaatorite sisse toomine.
-        
-    def ost(self):  # Funktsioon, mis kontrollib, kas indikaatorite väärtused vihjavad ostmisele.
+
+    # Funktsioon, mis kontrollib, kas indikaatorite väärtused vihjavad ostmisele.    
+    def ost(self):
         ostu_tingimused = [
         (self.valik['LarryR'] and self.williams <= -95),
         (self.valik['Moving average'] and self.dataclose[0] < self.sma and self.dataclose[-1] < self.sma),
@@ -43,7 +45,8 @@ class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsum
     ]
         return any(tingimus for tingimus in ostu_tingimused)
 
-    def müük(self): # Funktsioon, mis kontrollib, kas indikaatorite väärtused vihjavad müümisele.
+    # Funktsioon, mis kontrollib, kas indikaatorite väärtused vihjavad müümisele.
+    def müük(self):
         müügi_tingimused = [
         (self.valik['LarryR'] and self.williams >= -5),
         (self.valik['Moving average'] and self.dataclose[0] > self.sma and self.dataclose[-1] > self.sma),
@@ -53,7 +56,7 @@ class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsum
     ]
         return any(tingimus for tingimus in müügi_tingimused)
 
-    
+    # Funktsioon, mis annab terminali kaudu tehingust teada.
     def notify_order(self, order):
         if order.status in [order.Submitted, order.Accepted]:
             return
@@ -67,11 +70,15 @@ class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsum
 
         self.order=None
 
+    # Põhifunktsioon, mis töötleb andmefaili igat rida ja sooritab vastavalt soodsa indikaatori väärtuse korral tehinguid.
     def next(self):
         cash=self.cerebro.broker.getcash()
+        # Kui order on olemas, siis ei minda otsima uut positsiooni. Vajalik programmi tööks, kuid praktiline ainult reaalajas kauplemisel.
         if self.order:
             return
+        
         if not self.position:
+            # Programm ostab või müüb, kui funktsioonis olevad tingimused on täidetud.
             if self.ost():
                 self.stake=cash/self.dataclose[0]
                 self.order=self.buy(size=self.stake)                              
@@ -85,6 +92,7 @@ class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsum
                 self.orderday=self.dataclose[0]
                 self.tehingud+=1
         else:
+            # Programm sulgeb positsioonid, kui tingimused on rahuldatud. Ostu positsioon sulgub soodsa müügitingimuse korral ja vastupidi.
             if self.type == 'ost' and self.müük() or (self.dataclose[0]-self.orderday)*self.stake >= cash*self.kordaja:     
                 self.order=self.close(size=self.stake)
                 self.log('POSITSIOON SULETUD HINNAGA {}'.format(self.dataclose[0]))
