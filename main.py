@@ -32,7 +32,7 @@ def põhikood(rahasumma,failitee,riskiprotsent,indikaatorid):
     print('Portfelli lõppväärtus: %.2f' % cerebro.broker.getvalue())
     # Joonistatakse backtraderi sisseehitatud graafik
     cerebro.plot()
-
+# Paneb GUI tööle
 def main():
     root = tk.Tk()
     app = BacktestApp(root)
@@ -41,7 +41,7 @@ def main():
 
     # Kui GUI pandi lihtsalt kinni, siis ei tehta midagi
     try:
-        if app.andmed_olemas:
+        if app.andmed_olemas: # Kui andmed olemas, siis alustab backtrader testimist
             try:
                 põhikood(app.rahasumma, app.failitee, app.riskiprotsent, app.indikaatorid)
             except:

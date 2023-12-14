@@ -9,15 +9,15 @@ class BacktestApp:
         master.title("Backtester")
         master.configure(bg="#C6C6C6")  # Taustavärv
         
-        master.maxsize(550, 650)
+        master.maxsize(550, 650)  # Akna suurused
         master.minsize(550, 650)
         
-        logo = tk.PhotoImage(file="logo.png")
+        logo = tk.PhotoImage(file="logo.png") # Ikoon
         master.iconphoto(True, logo)
         
         # Stiil entry boxide jaoks
-        entry_style = ttk.Style()
-        entry_style.configure("TEntry", padding=5, relief="flat", background="#C6C6C6", font=("Helvetica", 16))
+        sisestus_stiil = ttk.Style()
+        sisestus_stiil.configure("TEntry", padding=5, relief="flat", background="#C6C6C6", font=("Helvetica", 16))
 
         # Pealkiri
         pealkiri_silt = tk.Label(master, text="Sisesta siia andmed testimiseks", font=("Helvetica", 20, "bold"), bg="#C6C6C6")
@@ -53,6 +53,7 @@ class BacktestApp:
         self.indikaatorid = {"Moving average":False, "Exponential moving average":False, "MACD":False, "RSI":False, "LarryR":False}
         self.checkboxid = []
 
+        # Teeb neid 5 tk
         for i, indikaator in enumerate(self.indikaatorid):
             muutuja = tk.IntVar()
             self.checkbox = tk.Checkbutton(self.checkboxide_raam, variable=muutuja, text=indikaator, font=("Helvetica", 10), bg="#C6C6C6", selectcolor="#C6C6C6")
@@ -72,15 +73,11 @@ class BacktestApp:
         nupu_stiil2 = ttk.Style()
         nupu_stiil2.configure("TButton", padding=5, relief="flat", background="#C6C6C6", foreground="#AFAFAF", font=("Helvetica", 10, "bold"),)
         nupu_stiil2.map("TButton", background=[("active", "#C6C6C6")])
-        
-        # Defineerin 'rooti', et põhifailis sellele paremini ligi saaks
-
 
         # Iga kord kui midagi entry boxi sisestatakse, siis kontrollib kas input on numerical
     def kontrolli_kas_on_number(self, input):
         if not input:
             return True  # Lubab kustutada
-
         try:
             float(input)
             if " " in input:
@@ -89,7 +86,7 @@ class BacktestApp:
         except ValueError:
             return False
     
-        # Läheb tööle, kui faili nupp on vajutatud
+        # Läheb tööle, kui lae faili nupp on vajutatud
     def lae_fail(self):
         failitee = filedialog.askopenfilename()
         self.faili_silt.config(text=f"Valitud fail: {failitee}")
@@ -99,7 +96,8 @@ class BacktestApp:
         self.rahasumma = self.rahasumma_sisestus.get()
         self.riskiprotsent = self.riskiprotsent_sisestus.get()
         self.failitee = self.faili_silt.cget("text").replace("Valitud fail: ", "")
-        
+
+        #Kontrollib, kas sisestused on korrektsed
         if self.rahasumma == "" or self.riskiprotsent == "" or self.failitee == "Vali fail" or (not any(list(map(bool, [muutuja.get() for muutuja in self.checkboxid])))):
             messagebox.showerror("ERROR", "Kontrolli üle sisestus")
         else:
@@ -107,7 +105,6 @@ class BacktestApp:
             for i, indikaator in enumerate(self.indikaatorid):  # Teeb sõnastiku indikaatoritest ja nende väärtustest
                 self.indikaatorid[indikaator] = self.checkboxid[i]
             self.andmed_olemas = True
-            print(self.indikaatorid)
             self.master.destroy()
 
 if __name__ == "__main__":
