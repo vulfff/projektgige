@@ -58,6 +58,7 @@ class BacktestApp:
             self.checkbox = tk.Checkbutton(self.checkboxide_raam, variable=muutuja, text=indikaator, font=("Helvetica", 10), bg="#C6C6C6", selectcolor="#C6C6C6")
             self.checkbox.grid(row=i, column=1, sticky="w", padx=180)
             self.checkboxid.append(muutuja)
+
         # Kinnita nupp
         self.kinnita_nupp = ttk.Button(master, text="Kinnita andmed ja alusta", command=self.võta_väärtused, style="Bold.TButton")
         self.kinnita_nupp.pack(pady = (40, 20))
@@ -98,15 +99,15 @@ class BacktestApp:
         self.rahasumma = self.rahasumma_sisestus.get()
         self.riskiprotsent = self.riskiprotsent_sisestus.get()
         self.failitee = self.faili_silt.cget("text").replace("Valitud fail: ", "")
-        self.checkboxid = list(map(bool,[muutuja.get() for muutuja in self.checkboxid]))  # Boolean list checkboxi väärtustest
-        for i, indikaator in enumerate(self.indikaatorid):       # Teeb sõnastiku indikaatoritest ja nende väärtustest
-            self.indikaatorid[indikaator] = self.checkboxid[i]
         
-        if self.rahasumma == "" or self.riskiprotsent == "" or self.failitee == "Vali fail":
+        if self.rahasumma == "" or self.riskiprotsent == "" or self.failitee == "Vali fail" or (not any(list(map(bool, [muutuja.get() for muutuja in self.checkboxid])))):
             messagebox.showerror("ERROR", "Kontrolli üle sisestus")
         else:
-            #print(self.indikaatorid)
+            self.checkboxid = list(map(bool, [muutuja.get() for muutuja in self.checkboxid]))
+            for i, indikaator in enumerate(self.indikaatorid):  # Teeb sõnastiku indikaatoritest ja nende väärtustest
+                self.indikaatorid[indikaator] = self.checkboxid[i]
             self.andmed_olemas = True
+            print(self.indikaatorid)
             self.master.destroy()
 
 if __name__ == "__main__":

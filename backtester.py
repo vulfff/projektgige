@@ -1,10 +1,5 @@
 import backtrader
 from andmed_GUI import BacktestApp
-# Moving average
-# Exponential moving  average
-# MACD
-# RSI
-# LarryR
 
 class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsume
     params = (          # MACD indikaatori parameetrid

@@ -4,6 +4,7 @@ from andmed_GUI import BacktestApp
 from backtester import strateegia
 import matplotlib.pyplot as plt
 import tkinter as tk
+from tkinter import messagebox
 
 def põhikood(rahasumma,failitee,riskiprotsent,indikaatorid):
 
@@ -40,7 +41,11 @@ def main():
     # Kui GUI pandi lihtsalt kinni, siis ei tehta midagi
     try:
         if app.andmed_olemas:
-            põhikood(app.rahasumma, app.failitee, app.riskiprotsent, app.indikaatorid)
+            try:
+                põhikood(app.rahasumma, app.failitee, app.riskiprotsent, app.indikaatorid)
+            except:
+                messagebox.showerror("ERROR", "Viga andmefailiga")
+                pass
     except AttributeError:
         pass
 
