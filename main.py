@@ -6,30 +6,31 @@ import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import messagebox
 
+# Funktsioon, mis teostab läbi backtraderi kauplemise.
 def põhikood(rahasumma,failitee,riskiprotsent,indikaatorid):
-
+    # Funktsioon, mis käivitab backtraderi
     cerebro = backtrader.Cerebro()
-
+    # Kasutaja poolt antud summa määratakse portfelli suuruseks
     cerebro.broker.set_cash(float(rahasumma))
-
+    # Faili andmete lugemine
     andmed=backtrader.feeds.YahooFinanceCSVData(                                        
         dataname=failitee,                                                                                                                                                 
     )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-
+    # Kasutaja poolt antud riskiprotsent määratakse muutujale.
     cerebro.risk=riskiprotsent
-
+    # Indikaatorid ka
     cerebro.valik=indikaatorid
-
+    # Põhirogrammi lisatakse andmed, mis just sisse loeti
     cerebro.adddata(andmed)
-
+    # Põhiprogrammi lisatakse strateegia backtester.py failist
     cerebro.addstrategy(strateegia)
 
     print('Portfelli suurus enne kauplemist: %.2f' % cerebro.broker.getvalue())
-
+    # Programm hakkab strateegiat andmete põhjal läbi mängima
     cerebro.run()
 
     print('Portfelli lõppväärtus: %.2f' % cerebro.broker.getvalue())
-
+    # Joonistatakse backtraderi sisseehitatud graafik
     cerebro.plot()
 
 def main():

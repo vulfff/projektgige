@@ -21,17 +21,20 @@ class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsum
         self.order=None     # Anname programmi initsialiseerimisel teada, et positsioone pole veel sisestatud.ss
 
         # Indikaatorite sisse toomine, nende poolt tekkinud väärtuste omistamine.
-        self.williams = backtrader.indicators.WilliamsR(self.data, period=14)
-        self.macd = backtrader.indicators.MACD(self.dataclose,
-                                                period_me1=self.params.macd1,
-                                                period_me2=self.params.macd2,
-                                                period_signal=self.params.macdsig,
-                                                )
-
-        self.ema = backtrader.indicators.ExponentialMovingAverage(self.dataclose, period=9)
-
-        self.rsi=backtrader.indicators.RelativeStrengthIndex(self.dataclose, period=14)
-        self.sma = backtrader.indicators.SMA(self.dataclose, period=9)
+        if self.valik['LarryR']==True:
+            self.williams = backtrader.indicators.WilliamsR(self.data, period=14)
+        if self.valik['MACD']==True:
+            self.macd = backtrader.indicators.MACD(self.dataclose,
+                                                    period_me1=self.params.macd1,
+                                                    period_me2=self.params.macd2,
+                                                    period_signal=self.params.macdsig,
+                                                    )
+        if self.valik['Exponential moving average']==True:
+            self.ema = backtrader.indicators.ExponentialMovingAverage(self.dataclose, period=9)
+        if self.valik['RSI']==True:
+            self.rsi=backtrader.indicators.RelativeStrengthIndex(self.dataclose, period=14)
+        if self.valik['Moving average']==True:
+            self.sma = backtrader.indicators.SMA(self.dataclose, period=9)
 
 
     # Funktsioon, mis kontrollib, kas indikaatorite väärtused vihjavad ostmisele.    
@@ -76,7 +79,6 @@ class strateegia(backtrader.Strategy):  # Klass, mille põhifailis välja kutsum
         # Kui order on olemas, siis ei minda otsima uut positsiooni. Vajalik programmi tööks, kuid praktiline ainult reaalajas kauplemisel.
         if self.order:
             return
-        
         if not self.position:
             # Programm ostab või müüb, kui funktsioonis olevad tingimused on täidetud.
             if self.ost():

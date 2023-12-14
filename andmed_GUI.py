@@ -74,7 +74,7 @@ class BacktestApp:
         nupu_stiil2.map("TButton", background=[("active", "#C6C6C6")])
         
         # Defineerin 'rooti', et põhifailis sellele paremini ligi saaks
-        self.root=master
+
 
         # Iga kord kui midagi entry boxi sisestatakse, siis kontrollib kas input on numerical
     def kontrolli_kas_on_number(self, input):
