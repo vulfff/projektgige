@@ -17,7 +17,7 @@ Programm töötab üldjuhul ainult andmetel, mis Yahoo portaalist saadaval, kuna
   * [LarryR](https://www.investopedia.com/terms/w/williamsr.asp)
 
 ### Kasutatud teegid/materjalid
-* ![Backtrader](https://github.com/mementum/backtrader) : Pythonil põhinev algoritmkauplemist võimaldav teek. Kasutatud portfelli loomisest kauplemisloogika läbiviimiseni.
-* ![TkTinker](https://docs.python.org/3/library/tkinter.html) : Pythonil põhinev GUI-d võimaldav teek. Kasutatud programmi GUI loomisel.
-* ![MatPlotLib](https://matplotlib.org/) : Pythonil põhinev visualisatsioone võimaldav teek. Vajalik backtraderi teegile graafiku loomiseks.
-* ![datetime](https://docs.python.org/3/library/datetime.html) : Pythonil põhinev teek, mis muudab kuupäevi sisaldavate andmete töötluse lihtsamaks. Kasutatud Yahoo andmete sisselugemisel.
+* [Backtrader](https://github.com/mementum/backtrader) : Pythonil põhinev algoritmkauplemist võimaldav teek. Kasutatud portfelli loomisest kauplemisloogika läbiviimiseni.
+* [TkTinker](https://docs.python.org/3/library/tkinter.html) : Pythonil põhinev GUI-d võimaldav teek. Kasutatud programmi GUI loomisel.
+* [MatPlotLib](https://matplotlib.org/) : Pythonil põhinev visualisatsioone võimaldav teek. Vajalik backtraderi teegile graafiku loomiseks.
+* [datetime](https://docs.python.org/3/library/datetime.html) : Pythonil põhinev teek, mis muudab kuupäevi sisaldavate andmete töötluse lihtsamaks. Kasutatud Yahoo andmete sisselugemisel.
