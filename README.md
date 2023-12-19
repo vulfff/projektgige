@@ -7,3 +7,13 @@ Programm töötab üldjuhul ainult andmetel, mis Yahoo portaalist saadaval, kuna
 
 
 Antud projektis on suures osas kasutatud ![backtraderi](https://github.com/mementum/backtrader) teeki, mis on Pythonil põhinev algoritmkauplemist võimaldav teek.
+
+### Programmi sisu
+* Kasutajasõbralik GUI
+* Tulemust illustreeriv graafik
+* 5 erinevat indikaatorit:
+  * ![SMA](https://www.investopedia.com/terms/s/sma.asp)
+  * ![EMA](https://www.investopedia.com/terms/e/ema.asp)
+  * ![MACD](https://www.investopedia.com/terms/m/macd.asp)
+  * ![RSI](https://www.investopedia.com/terms/r/rsi.asp)
+  * ![LarryR](https://www.investopedia.com/terms/w/williamsr.asp)
