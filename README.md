@@ -10,11 +10,11 @@ Programm töötab üldjuhul ainult andmetel, mis Yahoo portaalist saadaval, kuna
 * Kasutajasõbralik GUI
 * Tulemust illustreeriv graafik
 * 5 erinevat indikaatorit:
-  * ![SMA](https://www.investopedia.com/terms/s/sma.asp)
-  * ![EMA](https://www.investopedia.com/terms/e/ema.asp)
-  * ![MACD](https://www.investopedia.com/terms/m/macd.asp)
-  * ![RSI](https://www.investopedia.com/terms/r/rsi.asp)
-  * ![LarryR](https://www.investopedia.com/terms/w/williamsr.asp)
+  * [SMA](https://www.investopedia.com/terms/s/sma.asp)
+  * [EMA](https://www.investopedia.com/terms/e/ema.asp)
+  * [MACD](https://www.investopedia.com/terms/m/macd.asp)
+  * [RSI](https://www.investopedia.com/terms/r/rsi.asp)
+  * [LarryR](https://www.investopedia.com/terms/w/williamsr.asp)
 
 ### Kasutatud teegid/materjalid
 * ![Backtrader](https://github.com/mementum/backtrader) : Pythonil põhinev algoritmkauplemist võimaldav teek. Kasutatud portfelli loomisest kauplemisloogika läbiviimiseni.
